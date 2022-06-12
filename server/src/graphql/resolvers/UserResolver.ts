@@ -88,6 +88,8 @@ export default class UserResolver {
     }
 
     // login successful
+    user.lastLogin = new Date();
+    await em.persistAndFlush(user);
 
     sendRefreshToken(res, createRefreshToken(user));
 

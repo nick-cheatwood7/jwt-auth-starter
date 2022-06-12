@@ -55,12 +55,13 @@
         },
         "last_login": {
           "name": "last_login",
-          "type": "int",
+          "type": "timestamptz(0)",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": true,
-          "mappedType": "integer"
+          "length": 6,
+          "mappedType": "datetime"
         },
         "token_version": {
           "name": "token_version",
