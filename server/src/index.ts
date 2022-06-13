@@ -1,6 +1,7 @@
 import "dotenv-safe/config";
 import { MikroORM } from "@mikro-orm/core";
 import express, { Express, Request, Response } from "express";
+import cors from "cors";
 import mikroOrmConfig from "./mikro-orm.config";
 import { ApolloServer } from "apollo-server-express";
 import { createSchema } from "./utils/helpers/createSchema";
@@ -15,6 +16,12 @@ const main = async () => {
   await orm.getMigrator().up();
 
   const app: Express = express();
+  app.use(
+    cors({
+      origin: [process.env.CORS_ORIGIN, "https://studio.apollographql.com"],
+      credentials: true,
+    })
+  );
   app.use(cookieParser());
   app.get("/", (_req: Request, res: Response) => {
     res.status(200).json({ message: "Hello World" });
@@ -59,16 +66,11 @@ const main = async () => {
       em: orm.em.fork(),
       req,
       res,
-    })
+    }),
   });
 
-  const corsOptions = {
-    origin: [process.env.CORS_ORIGIN, "https://studio.apollographql.com"],
-    credentials: true
-  }
-
   await apolloServer.start();
-  apolloServer.applyMiddleware({ app, cors: corsOptions });
+  apolloServer.applyMiddleware({ app, cors: false });
 
   app.listen(4000, () => {
     console.log("server started on http://localhost:4000");
