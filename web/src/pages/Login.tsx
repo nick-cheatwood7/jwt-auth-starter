@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useLoginMutation } from "../generated/graphql";
+import { MeDocument, MeQuery, useLoginMutation } from "../generated/graphql";
 import { useNavigate } from "react-router-dom";
 
 interface LoginProps {}
@@ -19,6 +19,18 @@ export const Login: React.FC<LoginProps> = () => {
           variables: {
             email,
             password,
+          },
+          // update Apollo Cache
+          update: (store, { data }) => {
+            if (!data) {
+              return null;
+            }
+            store.writeQuery<MeQuery>({
+              query: MeDocument,
+              data: {
+                me: data.login.user,
+              },
+            });
           },
         });
         console.log(response);

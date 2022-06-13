@@ -18,6 +18,8 @@ import { sendRefreshToken } from "../../utils/services/sendRefreshToken";
 class LoginResponse {
   @Field()
   accessToken: string;
+  @Field(() => User)
+  user: User;
 }
 
 @Resolver(User)
@@ -28,10 +30,14 @@ export default class UserResolver {
     return users;
   }
 
-  @Query(() => String)
+  @Query(() => User, { nullable: true })
   @UseMiddleware(isAuth)
-  me(@Ctx() { payload }: MyContext): string {
-    return `your user id is: ${payload?.userId}`;
+  async me(@Ctx() { em, payload }: MyContext): Promise<User | null> {
+    const user = await em.findOne(User, { id: payload?.userId });
+    if (!user) {
+      return null;
+    }
+    return user;
   }
 
   @Mutation(() => Boolean)
@@ -95,6 +101,7 @@ export default class UserResolver {
 
     return {
       accessToken: createAccessToken(user),
+      user,
     };
   }
 }
