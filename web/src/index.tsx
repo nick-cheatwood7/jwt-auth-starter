@@ -2,6 +2,9 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import apolloLinks from "./utils/apolloLinks";
+import {
+  ChakraProvider
+} from "@chakra-ui/react"
 import { App } from "./App";
 
 const client = new ApolloClient({
@@ -15,7 +18,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
-      <App />
+      <ChakraProvider>
+        <App />
+      </ChakraProvider>
     </ApolloProvider>
   </React.StrictMode>
 );
