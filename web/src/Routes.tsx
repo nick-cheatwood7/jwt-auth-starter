@@ -1,5 +1,6 @@
 import React from "react";
-import { BrowserRouter, Routes as Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter, Routes as Switch, Route } from "react-router-dom";
+import { Header } from "./components/Header";
 import { Home } from "./pages/Home";
 import { Login } from "./pages/Login";
 import { Me } from "./pages/Me";
@@ -11,20 +12,7 @@ const Routes: React.FC<RoutesProps> = () => {
   return (
     <BrowserRouter>
       <div>
-        <header>
-          <div>
-            <Link to="/">home</Link>
-          </div>
-          <div>
-            <Link to="/register">register</Link>
-          </div>
-          <div>
-            <Link to="/login">login</Link>
-          </div>
-          <div>
-            <Link to="/me">me</Link>
-          </div>
-        </header>
+        <Header />
         <Switch>
           <Route path="/" element={<Home />} />
           <Route path="/register" element={<Register />} />

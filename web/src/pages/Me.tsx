@@ -4,7 +4,9 @@ import { useMeQuery } from "../generated/graphql";
 interface MeProps {}
 
 export const Me: React.FC<MeProps> = () => {
-  const { data, loading, error } = useMeQuery();
+  const { data, loading, error } = useMeQuery({
+    fetchPolicy: "network-only",
+  });
 
   if (loading) {
     return <div>loading..</div>;

@@ -18,6 +18,7 @@ export type Scalars = {
 export type LoginResponse = {
   __typename?: 'LoginResponse';
   accessToken: Scalars['String'];
+  user: User;
 };
 
 export type Mutation = {
@@ -47,7 +48,7 @@ export type MutationRevokeRefreshTokensForUserArgs = {
 export type Query = {
   __typename?: 'Query';
   hello: Scalars['String'];
-  me: Scalars['String'];
+  me?: Maybe<User>;
   users: Array<User>;
 };
 
@@ -66,7 +67,7 @@ export type LoginMutationVariables = Exact<{
 }>;
 
 
-export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'LoginResponse', accessToken: string } };
+export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'LoginResponse', accessToken: string, user: { __typename?: 'User', id: string, email: string } } };
 
 export type RegisterMutationVariables = Exact<{
   email: Scalars['String'];
@@ -84,7 +85,7 @@ export type HelloQuery = { __typename?: 'Query', hello: string };
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MeQuery = { __typename?: 'Query', me: string };
+export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: string, email: string } | null };
 
 export type UsersQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -96,6 +97,10 @@ export const LoginDocument = gql`
     mutation Login($email: String!, $password: String!) {
   login(email: $email, password: $password) {
     accessToken
+    user {
+      id
+      email
+    }
   }
 }
     `;
@@ -192,7 +197,10 @@ export type HelloLazyQueryHookResult = ReturnType<typeof useHelloLazyQuery>;
 export type HelloQueryResult = Apollo.QueryResult<HelloQuery, HelloQueryVariables>;
 export const MeDocument = gql`
     query Me {
-  me
+  me {
+    id
+    email
+  }
 }
     `;
 
