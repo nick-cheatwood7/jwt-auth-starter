@@ -14,7 +14,7 @@ export default class User extends CustomBaseEntity {
 
   @Field(() => Float, { nullable: true })
   @Property({ nullable: true })
-  lastLogin?: number;
+  lastLogin?: Date;
 
   @Property({ default: 0 })
   tokenVersion?: number;

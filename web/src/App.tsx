@@ -1,16 +1,30 @@
-import React from "react";
-import { useHelloQuery } from "./generated/graphql";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import Routes from "./Routes";
 
-interface AppProps {}
+interface Props {}
 
-const App: React.FC<AppProps> = () => {
-  const { data, loading } = useHelloQuery()
+export const App: React.FC<Props> = () => {
+  const [loading, setLoading] = useState<boolean>(true);
 
-  if (loading || !data) {
-    return <div>loading...</div>
+  const getRefreshToken = async (): Promise<void> => {
+    const response = await axios.post(
+      "http://localhost:4000/refresh_token",
+      {},
+      { withCredentials: true }
+    );
+    console.log(response.data);
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    // get new refresh token
+    getRefreshToken();
+  }, []);
+
+  if (loading) {
+    return <div>loading...</div>;
   }
 
-  return <div>{JSON.stringify(data, null, 2)}</div>;
+  return <Routes />;
 };
-
-export default App;
