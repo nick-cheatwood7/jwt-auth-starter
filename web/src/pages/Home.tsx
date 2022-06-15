@@ -20,18 +20,6 @@ export const Home: React.FC<HomeProps> = () => {
   }
 
   return (
-    // <div>
-    //   <div>users:</div>
-    //   <ul>
-    //     {data.users.map((u) => {
-    //       return (
-    //         <li key={u.id}>
-    //           {u.email}, {u.id}, {u.lastLogin}
-    //         </li>
-    //       );
-    //     })}
-    //   </ul>
-    // </div>
     <TableContainer>
       <Table variant="simple">
         <Thead>

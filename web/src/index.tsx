@@ -17,10 +17,10 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <ApolloProvider client={client}>
-      <ChakraProvider>
-        <App />
-      </ChakraProvider>
-    </ApolloProvider>
+      <ApolloProvider client={client}>
+        <ChakraProvider>
+          <App />
+        </ChakraProvider>
+      </ApolloProvider>
   </React.StrictMode>
 );

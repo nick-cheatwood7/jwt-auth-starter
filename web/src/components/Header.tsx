@@ -47,7 +47,7 @@ export const Header: React.FC<HeaderProps> = () => {
   }
 
   return (
-    <Flex minWidth="max-content" alignItems="center" gap="2">
+    <Flex minWidth="max-content" alignItems="center" gap="2" width="100%" p={3}>
       <Box p="2">
         <Link>
           <Heading size="md" onClick={() => navigate("/")}>JWT Auth Starter</Heading>

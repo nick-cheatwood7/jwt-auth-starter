@@ -7,6 +7,9 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
+  Link,
+  Spacer,
+  Text
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { useLoginMutation, MeQuery, MeDocument } from "../generated/graphql";
@@ -85,10 +88,17 @@ export const LoginForm: React.FC<LoginFormProps> = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </InputGroup>
-        <Button colorScheme="teal" type="submit" width="100%">
+        <Button colorScheme="teal" type="submit" width="100%" mb={3}>
           Log In
         </Button>
       </form>
+      <Flex direction="row">
+        <Text color="gray.600">Don't have an account?</Text>
+        <Spacer />
+        <Link onClick={() => navigate("/register")}>
+          Register
+        </Link>
+      </Flex>
     </Flex>
   );
 };
